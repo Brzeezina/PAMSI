@@ -17,7 +17,12 @@ vector_custom& sender::send_msg(std::string msg, size_t num_of_bytes){
     for(size_t i = 0; i < num_of_packages; i++){
         std::string text; //= new std::string;//(std::string*)malloc(sizeof(std::string));
         pakiet *pack = new pakiet();
-        text = msg.substr(i*num_of_bytes,num_of_bytes);
+        if(i != num_of_packages){
+            text = msg.substr(i*num_of_bytes,num_of_bytes);
+        }else{
+            size_t left_bytes = msg.size() - num_of_packages*num_of_bytes;
+            text = msg.substr(i*num_of_bytes, left_bytes);
+        }
         pack->id = i;
         pack->msg = text;
         vec->add_element(i, (void*)pack);
